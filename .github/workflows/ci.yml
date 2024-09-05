@@ -15,7 +15,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'Bump version')"
 
     strategy:
       matrix:
@@ -49,7 +48,7 @@ jobs:
 
   version-and-release:
     runs-on: ubuntu-latest
-    if: "github.event_name == 'push' && github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, 'Bump version')"
+    if: github.event_name == 'workflow_dispatch'
     needs: [build]
     steps:
     - uses: actions/checkout@v2
@@ -68,7 +67,7 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        npm version patch -m "Bump version to %s"
+        npm version ${{ github.event.inputs.version_increment }} -m "Bump version to %s"
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}
 
@@ -97,7 +96,7 @@ jobs:
     - name: Commit and push changes
       run: |
         git add version-info.json package.json package-lock.json
-        git commit -m "Update version-info.json for version ${{ steps.package_version.outputs.current_version }}"
+        git commit -m "Update version to ${{ steps.package_version.outputs.current_version }}"
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_PAT }}
