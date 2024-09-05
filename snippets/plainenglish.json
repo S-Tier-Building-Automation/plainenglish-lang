@@ -22,5 +22,45 @@
         "prefix": "ifgoto",
         "body": "If ($1) Then Goto $2",
         "description": "If-Then-Goto statement"
+    },
+    "TURN": {
+        "prefix": "turn",
+        "body": "TURN ${1:variable} ${2|ON,OFF|}",
+        "description": "TURN statement to change boolean state"
+    },
+    "WAIT": {
+        "prefix": "wait",
+        "body": "WAIT ${1:seconds}",
+        "description": "WAIT statement to pause execution"
+    },
+    "WEEKDAY": {
+        "prefix": "weekday",
+        "body": "WEEKDAY(${1:date})",
+        "description": "WEEKDAY function to get day of the week"
+    },
+    "WebService": {
+        "prefix": "webservice",
+        "body": "WebService(\"${1:URL}\", \"${2|GET,POST,PUT,DELETE|}\", ${3:Parameters})",
+        "description": "WebService function to interact with web services"
+    },
+    "SQRT": {
+        "prefix": "sqrt",
+        "body": "SQRT(${1:number})",
+        "description": "SQRT function to calculate square root"
+    },
+    "STRING": {
+        "prefix": "string",
+        "body": "STRING ${1:variableName}",
+        "description": "Declare STRING variable"
+    },
+    "TAB": {
+        "prefix": "tab",
+        "body": "TAB(${1:number})",
+        "description": "TAB function to add tab spaces"
+    },
+    "TRUNCATE": {
+        "prefix": "truncate",
+        "body": "TRUNCATE(${1:string}, ${2:length})",
+        "description": "TRUNCATE function to shorten a string"
     }
 }

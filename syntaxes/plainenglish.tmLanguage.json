@@ -25,7 +25,7 @@
         "keywords": {
             "patterns": [{
                 "name": "keyword.control.plainenglish",
-                "match": "\\b(If|Then|Goto)\\b"
+                "match": "\\b(If|Then|Goto|TURN|WAIT|WEEKDAY|WebService|SQRT|STRING|TAB|TRUNCATE)\\b"
             }]
         },
         "numeric-declarations": {
