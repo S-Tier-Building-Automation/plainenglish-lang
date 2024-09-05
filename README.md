@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/S-Tier-Building-Automation/plainenglish-lang/actions/workflows/ci.yml/badge.svg)](https://github.com/S-Tier-Building-Automation/plainenglish-lang/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Latest Release](https://img.shields.io/badge/release-v0.0.7-blue.svg)](https://github.com/S-Tier-Building-Automation/plainenglish-lang/releases)
+[![Latest Release](https://img.shields.io/github/v/release/S-Tier-Building-Automation/plainenglish-lang)](https://github.com/S-Tier-Building-Automation/plainenglish-lang/releases)
 
 This Visual Studio Code extension provides comprehensive language support for Schneider Electric Plain English programming language, enhancing productivity and code quality for Schneider Electric automation projects.
 
@@ -75,8 +75,6 @@ This project uses GitHub Actions for automated versioning and release creation. 
 2. Select the "CI" workflow.
 3. Click "Run workflow" and choose the version increment type (patch, minor, or major).
 4. The workflow will automatically update version numbers, create a new release, and upload the packaged extension.
-
-Note: After creating a new release, manually update the version number in the release badge in this README.
 
 ## License
 
