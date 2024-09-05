@@ -48,7 +48,7 @@ jobs:
 
   version-and-release:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     needs: [build]
     steps:
     - uses: actions/checkout@v2
@@ -63,18 +63,9 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Bump version and update files
-      id: version
-      run: |
-        npm version ${{ github.event.inputs.version_increment }} -m "Bump version to %s"
-        NEW_VERSION=$(node -p "require('./package.json').version")
-        echo "::set-output name=new_version::$NEW_VERSION"
-        
-        # Update version-info.json
-        jq --arg version "$NEW_VERSION" --arg url "https://github.com/${{ github.repository }}/releases/download/v$NEW_VERSION/plainenglish-lang-$NEW_VERSION.vsix" '.version = $version | .downloadUrl = $url' version-info.json > temp.json && mv temp.json version-info.json
-
-    - name: Package extension
-      run: npx @vscode/vsce package
+    - name: Get current version
+      id: package_version
+      run: echo "::set-output name=current_version::$(node -p "require('./package.json').version")"
 
     - name: Create Release
       id: create_release
@@ -82,8 +73,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.version.outputs.new_version }}
-        release_name: Release ${{ steps.version.outputs.new_version }}
+        tag_name: v${{ steps.package_version.outputs.current_version }}
+        release_name: Release ${{ steps.package_version.outputs.current_version }}
         draft: false
         prerelease: false
 
@@ -93,14 +84,18 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./plainenglish-lang-${{ steps.version.outputs.new_version }}.vsix
-        asset_name: plainenglish-lang-${{ steps.version.outputs.new_version }}.vsix
+        asset_path: ./plainenglish-lang-${{ steps.package_version.outputs.current_version }}.vsix
+        asset_name: plainenglish-lang-${{ steps.package_version.outputs.current_version }}.vsix
         asset_content_type: application/octet-stream
+
+    - name: Update version-info.json
+      run: |
+        jq --arg version "${{ steps.package_version.outputs.current_version }}" --arg url "https://github.com/${{ github.repository }}/releases/download/v${{ steps.package_version.outputs.current_version }}/plainenglish-lang-${{ steps.package_version.outputs.current_version }}.vsix" '.version = $version | .downloadUrl = $url' version-info.json > temp.json && mv temp.json version-info.json
 
     - name: Commit and push changes
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add package.json version-info.json
-        git commit -m "Update version to ${{ steps.version.outputs.new_version }}"
+        git add version-info.json
+        git commit -m "Update version-info.json for version ${{ steps.package_version.outputs.current_version }}"
         git push
