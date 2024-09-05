@@ -32,6 +32,7 @@
     "compile": "tsc -b",
     "watch": "tsc -b -w",
     "lint": "eslint . --ext .ts,.tsx",
+    "pretest": "npm run compile",
     "test": "node ./out/test/runTest.js",
     "install-client": "cd client && npm install",
     "install-server": "cd server && npm install",
