@@ -3,6 +3,7 @@
   "displayName": "Schneider Electric Plain English",
   "description": "Language support for Schneider Electric Plain English",
   "version": "0.0.3",
+  "publisher": "S-Tier-Building-Automation",
   "engines": {
     "vscode": "^1.63.0",
     "node": ">=18.17"
