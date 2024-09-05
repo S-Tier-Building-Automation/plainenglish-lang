@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/S-Tier-Building-Automation/plainenglish-lang/actions/workflows/ci.yml/badge.svg)](https://github.com/S-Tier-Building-Automation/plainenglish-lang/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Latest Release](https://img.shields.io/github/v/release/S-Tier-Building-Automation/plainenglish-lang)](https://github.com/S-Tier-Building-Automation/plainenglish-lang/releases)
 
 This Visual Studio Code extension provides comprehensive language support for Schneider Electric Plain English programming language, enhancing productivity and code quality for Schneider Electric automation projects.
 
