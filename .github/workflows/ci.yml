@@ -5,6 +5,12 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      version_increment:
+        description: 'Version increment type (patch, minor, major)'
+        required: true
+        default: 'patch'
 
 jobs:
   build:
@@ -46,22 +52,61 @@ jobs:
         name: plainenglish-lang-extension
         path: "*.vsix"
 
-  analyze:
-    name: Analyze
+  version-and-release:
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
+    if: github.event_name == 'workflow_dispatch'
+    needs: [build]
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+    - uses: actions/checkout@v2
       with:
-        languages: javascript, typescript
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Bump version and update files
+      id: version
+      run: |
+        npm version ${{ github.event.inputs.version_increment }} -m "Bump version to %s"
+        NEW_VERSION=$(node -p "require('./package.json').version")
+        echo "::set-output name=new_version::$NEW_VERSION"
+        
+        # Update version-info.json
+        jq --arg version "$NEW_VERSION" --arg url "https://github.com/${{ github.repository }}/releases/download/v$NEW_VERSION/plainenglish-lang-$NEW_VERSION.vsix" '.version = $version | .downloadUrl = $url' version-info.json > temp.json && mv temp.json version-info.json
+
+    - name: Package extension
+      run: npx vsce package
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.version.outputs.new_version }}
+        release_name: Release ${{ steps.version.outputs.new_version }}
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./plainenglish-lang-${{ steps.version.outputs.new_version }}.vsix
+        asset_name: plainenglish-lang-${{ steps.version.outputs.new_version }}.vsix
+        asset_content_type: application/octet-stream
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add package.json version-info.json
+        git commit -m "Update version to ${{ steps.version.outputs.new_version }}"
+        git push
