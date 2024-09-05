@@ -31,7 +31,7 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -b",
     "watch": "tsc -b -w",
-    "lint": "eslint src --ext ts",
+    "lint": "eslint client/src --ext ts && eslint server/src --ext ts",
     "test": "node ./out/test/runTest.js",
     "install-client": "cd client && npm install",
     "install-server": "cd server && npm install",
