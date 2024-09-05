@@ -1,0 +1,61 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Schneider Electric Plain English",
+    "patterns": [
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#numeric-declarations"
+        },
+        {
+            "include": "#constants"
+        },
+        {
+            "include": "#operators"
+        },
+        {
+            "include": "#variables"
+        },
+        {
+            "include": "#comments"
+        }
+    ],
+    "repository": {
+        "keywords": {
+            "patterns": [{
+                "name": "keyword.control.plainenglish",
+                "match": "\\b(If|Then|Goto)\\b"
+            }]
+        },
+        "numeric-declarations": {
+            "patterns": [{
+                "name": "storage.type.plainenglish",
+                "match": "\\b(Numeric Input|Numeric Output)\\b"
+            }]
+        },
+        "constants": {
+            "patterns": [{
+                "name": "constant.language.plainenglish",
+                "match": "\\b(On|Off)\\b"
+            }]
+        },
+        "operators": {
+            "patterns": [{
+                "name": "keyword.operator.plainenglish",
+                "match": "(=|>|<|>=|<=|<>|!|&)"
+            }]
+        },
+        "variables": {
+            "patterns": [{
+                "name": "variable.other.plainenglish",
+                "match": "\\b[A-Za-z][A-Za-z0-9]*\\b"
+            }]
+        },
+        "comments": {
+            "name": "comment.line.plainenglish",
+            "match": "'.*$"
+        }
+    },
+    "scopeName": "source.plainenglish"
+}

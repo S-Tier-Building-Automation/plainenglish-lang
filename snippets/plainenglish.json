@@ -1,0 +1,26 @@
+{
+    "Numeric Input": {
+        "prefix": "ni",
+        "body": "Numeric Input $1",
+        "description": "Declare Numeric Input"
+    },
+    "Numeric Output": {
+        "prefix": "no",
+        "body": "Numeric Output $1",
+        "description": "Declare Numeric Output"
+    },
+    "If Then": {
+        "prefix": "if",
+        "body": [
+            "If ($1) Then",
+            "\t$2",
+            "End If"
+        ],
+        "description": "If-Then statement"
+    },
+    "If Then Goto": {
+        "prefix": "ifgoto",
+        "body": "If ($1) Then Goto $2",
+        "description": "If-Then-Goto statement"
+    }
+}

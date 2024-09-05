@@ -1,0 +1,16 @@
+{
+  "name": "plainenglish-lang-client",
+  "description": "VSCode client for Schneider Electric Plain English language server",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.63.0"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.4",
+    "@types/vscode": "^1.63.0",
+    "@vscode/test-electron": "^2.1.2"
+  }
+}
