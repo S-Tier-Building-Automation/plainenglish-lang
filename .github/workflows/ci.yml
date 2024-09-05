@@ -49,7 +49,7 @@ jobs:
       run: npm test
 
     - name: Package extension
-      run: npm run package
+      run: npx @vscode/vsce package
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
@@ -93,7 +93,7 @@ jobs:
         jq --arg version "$NEW_VERSION" --arg url "https://github.com/${{ github.repository }}/releases/download/v$NEW_VERSION/plainenglish-lang-$NEW_VERSION.vsix" '.version = $version | .downloadUrl = $url' version-info.json > temp.json && mv temp.json version-info.json
 
     - name: Package extension
-      run: npx vsce package
+      run: npx @vscode/vsce package
 
     - name: Create Release
       id: create_release
