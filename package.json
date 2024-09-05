@@ -2,7 +2,7 @@
   "name": "plainenglish-lang",
   "displayName": "Schneider Electric Plain English",
   "description": "Language support for Schneider Electric Plain English",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "S-Tier-Building-Automation",
   "engines": {
     "vscode": "^1.63.0",
@@ -12,21 +12,32 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "plainenglish",
-      "aliases": ["Schneider Electric Plain English", "plainenglish"],
-      "extensions": [".pe"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "plainenglish",
-      "scopeName": "source.plainenglish",
-      "path": "./syntaxes/plainenglish.tmLanguage.json"
-    }],
-    "snippets": [{
-      "language": "plainenglish",
-      "path": "./snippets/plainenglish.json"
-    }]
+    "languages": [
+      {
+        "id": "plainenglish",
+        "aliases": [
+          "Schneider Electric Plain English",
+          "plainenglish"
+        ],
+        "extensions": [
+          ".pe"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "plainenglish",
+        "scopeName": "source.plainenglish",
+        "path": "./syntaxes/plainenglish.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "plainenglish",
+        "path": "./snippets/plainenglish.json"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
