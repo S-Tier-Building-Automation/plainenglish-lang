@@ -13,6 +13,7 @@ This Visual Studio Code extension provides comprehensive language support for Sc
 - Snippets for common Schneider Electric Plain English constructs
 - Hover information for language constructs
 - Go to definition and find all references
+- Automated versioning and release process
 
 ## Installation
 
@@ -64,6 +65,15 @@ To set up the development environment:
 3. Run `npm run compile` to compile the TypeScript code.
 4. Use `npm run lint` to check for code style issues.
 5. Run `npm test` to execute the test suite.
+
+## Automated Versioning and Release
+
+This project uses GitHub Actions for automated versioning and release creation. To create a new release:
+
+1. Go to the "Actions" tab in the GitHub repository.
+2. Select the "CI" workflow.
+3. Click "Run workflow" and choose the version increment type (patch, minor, or major).
+4. The workflow will automatically update version numbers, create a new release, and upload the packaged extension.
 
 ## License
 
