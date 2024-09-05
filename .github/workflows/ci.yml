@@ -65,26 +65,21 @@ jobs:
       id: package_version
       run: echo "current_version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
 
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: plainenglish-lang-extension
+
     - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
+      uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: v${{ steps.package_version.outputs.current_version }}
-        release_name: Release ${{ steps.package_version.outputs.current_version }}
+        name: Release ${{ steps.package_version.outputs.current_version }}
         draft: false
         prerelease: false
-
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./plainenglish-lang-${{ steps.package_version.outputs.current_version }}.vsix
-        asset_name: plainenglish-lang-${{ steps.package_version.outputs.current_version }}.vsix
-        asset_content_type: application/octet-stream
+        files: plainenglish-lang-${{ steps.package_version.outputs.current_version }}.vsix
 
     - name: Update version-info.json
       run: |
