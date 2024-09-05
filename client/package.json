@@ -12,5 +12,10 @@
     "@types/node": "^22.5.4",
     "@types/vscode": "^1.63.0",
     "@vscode/test-electron": "^2.1.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/S-Tier-Building-Automation/plainenglish-lang.git"
+  },
+  "license": "MIT"
 }
